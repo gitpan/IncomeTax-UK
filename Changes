@@ -1,4 +1,8 @@
 Revision history for IncomeTax-UK
 
+0.02    Thu Apr 28 13:02:00 2011
+        - Add pod for CONSTRUCTOR.
+        - Updated pod for method get_tax_amount().
+
 0.01    Thu Apr 28 12:48:01 2011
         - First version, released.

@@ -14,11 +14,11 @@ IncomeTax::UK - Interface to Income Tax of UK.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 Readonly my $UPPER_LIMIT => 150_000;
 
@@ -65,6 +65,23 @@ it to GBP 7,475 for the tax year 2011-12.
     | Additional | 42.5%    | 50%     | 50%              | over GBP 150,000          |
     +------------+----------+---------+------------------+---------------------------+
 
+=head1 CONSTRUCTOR
+
+The constructor expects a reference to an anonymous hash as input parameter. Table below shows
+the possible value of various key and value pairs.
+
+    +----------+--------------------+
+    | Key      | Value              |
+    +----------+--------------------+
+    | age      | Age of the person. |
+    | tax_year | 2010-11 | 2011-12. |
+    +----------+--------------------+
+
+    use stric; use warnings;
+    use IncomeTax::UK;
+    
+    my $uk = IncomeTax::UK->new({age => 35, tax_year => '2010-11'});
+
 =cut
 
 sub new
@@ -81,7 +98,8 @@ sub new
 
 =head2 get_tax_amount()
 
-Returns the tax amount for given type in the given tax year. Possible values for types are as:
+Returns the tax amount for the given gross amount & type in the given tax year.Possible values
+for types are as below. They are passed in as list gross amount, type. 
 
     +------------------------+----------+
     | Type                   | Value    |
