@@ -1,5 +1,8 @@
 Revision history for IncomeTax-UK
 
+0.04    Fri Apr 29 11:52:47 2011
+        - Added example to the pod of method get_tax_amount().
+
 0.03    Fri Apr 29 07:54:12 2011
         - Fixed the floating number inconsistency in Windows & Linux.
 

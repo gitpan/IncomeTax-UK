@@ -14,11 +14,11 @@ IncomeTax::UK - Interface to Income Tax of UK.
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 Readonly my $UPPER_LIMIT => 150_000;
 
@@ -110,6 +110,12 @@ for types are as below. They are passed in as list gross amount, type.
     +------------------------+----------+
 
 Default is other i.e. Income Tax.
+
+    use stric; use warnings;
+    use IncomeTax::UK;
+
+    my $uk = IncomeTax::UK->new({age => 35, tax_year => '2010-11'});
+    print $uk->get_tax_amount(55000);
 
 =cut
 
