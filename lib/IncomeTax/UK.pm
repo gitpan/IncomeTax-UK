@@ -14,11 +14,11 @@ IncomeTax::UK - Interface to Income Tax of UK.
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 Readonly my $UPPER_LIMIT => 150_000;
 
@@ -154,9 +154,7 @@ sub get_tax_amount
         if ($amount - $self->{standard_tax} > 0);
     $self->{nett_tax} = $amount;
 
-    # For more information: http://sources.redhat.com/bugzilla/show_bug.cgi?id=4943
-    $amount = _quickfix_FPN($amount);
-    return sprintf("%.02f", $amount);
+    return $amount;
 }
 
 =head2 get_breakdown()
@@ -199,24 +197,15 @@ Same as get_breakdown() except that it gets called when printing object in scala
 sub as_string
 {
     my $self   = shift;
-    my $string = sprintf("         Gross: %.02f\n", _quickfix_FPN($self->{gross}));
-    $string   .= sprintf("       Taxable: %.02f\n", _quickfix_FPN($self->{taxable}));
-    $string   .= sprintf("  Standard Tax: %.02f\n", _quickfix_FPN($self->{standard_tax}));
-    $string   .= sprintf("Additional Tax: %.02f\n", _quickfix_FPN($self->{additional_tax}))
+    my $string = sprintf("         Gross: %.02f\n", $self->{gross});
+    $string   .= sprintf("       Taxable: %.02f\n", $self->{taxable});
+    $string   .= sprintf("  Standard Tax: %.02f\n", $self->{standard_tax});
+    $string   .= sprintf("Additional Tax: %.02f\n", $self->{additional_tax})
         if exists($self->{additional_tax});
     $string   .= "-------------------------\n";
-    $string   .= sprintf("       Net Tax: %.02f\n", _quickfix_FPN($self->{nett_tax}));
+    $string   .= sprintf("       Net Tax: %.02f\n", $self->{nett_tax});
     $string   .= "-------------------------\n";
     return $string;
-}
-
-# For upto 3 decimal points floating point numbers.
-sub _quickfix_FPN
-{
-    my $number = shift;
-    $number = $number * 1000;
-    $number = sprintf("%.0f", $number);
-    return sprintf("%.02f", ($number/1000));
 }
 
 sub _get_band

@@ -1,5 +1,10 @@
 Revision history for IncomeTax-UK
 
+0.05    Fri Apr 29 14:37:19 2011
+        - Rollbacked the changes for v 0.03 as it didn't make any difference.
+        - Now retursn the tax amount without any formatting.
+        - Updated the unit test at the same time.
+
 0.04    Fri Apr 29 11:52:47 2011
         - Added example to the pod of method get_tax_amount().
 
