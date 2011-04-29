@@ -14,11 +14,11 @@ IncomeTax::UK - Interface to Income Tax of UK.
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 Readonly my $UPPER_LIMIT => 150_000;
 
@@ -44,7 +44,7 @@ Readonly my $ADDITIONAL =>
 
 Income tax forms  the  bulk of revenues collected by the government. Each person has an income
 tax personal allowance and  income upto this amount in each tax year is tax free for everyone.
-For  2010-11  the  tax  allowance  for under 65s is GBP 6,475. On 22 June 2010, the Chancellor 
+For  2010-11  the  tax  allowance  for under 65s is GBP 6,475. On 22 June 2010, the Chancellor
 (George Osborne) increased the personal allowance by GBP 1000 in his emergency budget bringing
 it to GBP 7,475 for the tax year 2011-12.
 
@@ -79,7 +79,7 @@ the possible value of various key and value pairs.
 
     use stric; use warnings;
     use IncomeTax::UK;
-    
+
     my $uk = IncomeTax::UK->new({age => 35, tax_year => '2010-11'});
 
 =cut
@@ -88,7 +88,7 @@ sub new
 {
     my $class = shift;
     my $param = shift;
-    
+
     _validate_param($param);
     bless $param, $class;
     return $param;
@@ -99,7 +99,7 @@ sub new
 =head2 get_tax_amount()
 
 Returns the tax amount for the given gross amount & type in the given tax year.Possible values
-for types are as below. They are passed in as list gross amount, type. 
+for types are as below. They are passed in as list gross amount, type.
 
     +------------------------+----------+
     | Type                   | Value    |
@@ -108,8 +108,8 @@ for types are as below. They are passed in as list gross amount, type.
     | Savings                | savings  |
     | Other (inc employment) | other    |
     +------------------------+----------+
-    
-Default is other i.e. Income Tax.    
+
+Default is other i.e. Income Tax.
 
 =cut
 
@@ -119,7 +119,7 @@ sub get_tax_amount
     my $amount = shift;
     my $type   = shift;
     $type = 'other' unless defined $type;
-    
+
     croak("ERROR: Missing gross amount.\n")
         unless defined $amount;
     croak("ERROR: Invalid value for gross amount [$amount].\n")
@@ -131,23 +131,25 @@ sub get_tax_amount
     $allowance = 0;
     $allowance = $PERSONAL_ALLOWANCE->{$self->{tax_year}}
         if ($self->{age} < 65);
-        
+
     $self->{gross}     = $amount;
-    $self->{allowance} = $allowance;    
-    
+    $self->{allowance} = $allowance;
+
     $taxable = $amount - $allowance;
     $amount  = $taxable * _get_band($type, $amount);
-    
+
     $self->{taxable}      = $taxable;
     $self->{standard_tax} = $amount;
-    
+
     $amount += ($taxable-$UPPER_LIMIT) * $ADDITIONAL->{$type}
         if ($taxable > $UPPER_LIMIT);
-        
+
     $self->{additional_tax} = $amount - $self->{standard_tax}
         if ($amount - $self->{standard_tax} > 0);
-    $self->{nett_tax} = $amount;    
+    $self->{nett_tax} = $amount;
 
+    # For more information: http://sources.redhat.com/bugzilla/show_bug.cgi?id=4943
+    $amount = _quickfix_FPN($amount);
     return sprintf("%.02f", $amount);
 }
 
@@ -158,7 +160,7 @@ Otherwise if it would simply return nothing.
 
     use stric; use warnings;
     use IncomeTax::UK;
-    
+
     my $uk = IncomeTax::UK->new({age => 35, tax_year => '2010-11'});
     my $income_tax = $uk->get_tax_amount(55000);
     print $uk->get_breakdown();
@@ -177,13 +179,13 @@ Same as get_breakdown() except that it gets called when printing object in scala
 
     use stric; use warnings;
     use IncomeTax::UK;
-    
+
     my $uk = IncomeTax::UK->new({age => 35, tax_year => '2010-11'});
     my $income_tax = $uk->get_tax_amount(55000);
     print $uk->as_string();
-    
+
     # or simply
-    
+
     print $uk;
 
 =cut
@@ -191,22 +193,31 @@ Same as get_breakdown() except that it gets called when printing object in scala
 sub as_string
 {
     my $self   = shift;
-    my $string = sprintf("         Gross: %.02f\n", $self->{gross});
-    $string   .= sprintf("       Taxable: %.02f\n", $self->{taxable});
-    $string   .= sprintf("  Standard Tax: %.02f\n", $self->{standard_tax});
-    $string   .= sprintf("Additional Tax: %.02f\n", $self->{additional_tax})
+    my $string = sprintf("         Gross: %.02f\n", _quickfix_FPN($self->{gross}));
+    $string   .= sprintf("       Taxable: %.02f\n", _quickfix_FPN($self->{taxable}));
+    $string   .= sprintf("  Standard Tax: %.02f\n", _quickfix_FPN($self->{standard_tax}));
+    $string   .= sprintf("Additional Tax: %.02f\n", _quickfix_FPN($self->{additional_tax}))
         if exists($self->{additional_tax});
     $string   .= "-------------------------\n";
-    $string   .= sprintf("       Net Tax: %.02f\n", $self->{nett_tax});
+    $string   .= sprintf("       Net Tax: %.02f\n", _quickfix_FPN($self->{nett_tax}));
     $string   .= "-------------------------\n";
     return $string;
+}
+
+# For upto 3 decimal points floating point numbers.
+sub _quickfix_FPN
+{
+    my $number = shift;
+    $number = $number * 1000;
+    $number = sprintf("%.0f", $number);
+    return sprintf("%.02f", ($number/1000));
 }
 
 sub _get_band
 {
     my $type   = shift;
     my $amount = shift;
-    
+
     foreach (keys %{$TAX_BAND})
     {
         return $TAX_BAND->{$_}->{$type} if ($_ <= $amount);
@@ -217,7 +228,7 @@ sub _get_band
 sub _validate_param
 {
     my $param = shift;
-    croak("ERROR: Missing input parameters.\n") 
+    croak("ERROR: Missing input parameters.\n")
         unless defined $param;
     croak("ERROR: Input param has to be a ref to HASH.\n")
         if (ref($param) ne 'HASH');
@@ -228,8 +239,8 @@ sub _validate_param
     croak("ERROR: Invalid value for key age.\n")
         unless ($param->{age} =~ /^\d+$/);
     croak("ERROR: Invalid value for key tax_year.\n")
-        unless (($param->{tax_year} =~ /^\d{4}\-\d{2}$/) 
-                && 
+        unless (($param->{tax_year} =~ /^\d{4}\-\d{2}$/)
+                &&
                 ($param->{tax_year} =~ /^2010-11|2011-12$/));
     croak("ERROR: Invalid number of keys found in the input hash.\n")
         unless (scalar(keys %{$param}) == 2);
@@ -242,7 +253,7 @@ Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>
 =head1 BUGS
 
 Please report any bugs  or feature requests to C<bug-incometax-uk at rt.cpan.org>,  or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=IncomeTax-UK>. I will be 
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=IncomeTax-UK>. I will be
 notified and then you'll automatically be notified of progress on your bug as I make changes.
 
 =head1 SUPPORT

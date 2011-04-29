@@ -12,3 +12,4 @@ t/manifest.t
 t/pod.t
 META.yml
 SIGNATURE    Added here by Module::Build
+SIGNATURE    Added here by Module::Build
