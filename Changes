@@ -1,5 +1,8 @@
 Revision history for IncomeTax-UK
 
+0.06    Fri Apr 29 17:32:32 2011
+        - Removed double entry of SIGNATURE from the MANIFEST.
+
 0.05    Fri Apr 29 14:37:19 2011
         - Rollbacked the changes for v 0.03 as it didn't make any difference.
         - Now retursn the tax amount without any formatting.
