@@ -1,5 +1,8 @@
 Revision history for IncomeTax-UK
 
+0.07    Wed May 25 11:32:11 2011
+        - Added missing =cut at the end of the source code.
+
 0.06    Fri Apr 29 17:32:32 2011
         - Removed double entry of SIGNATURE from the MANIFEST.
 
