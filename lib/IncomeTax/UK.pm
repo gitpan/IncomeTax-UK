@@ -14,11 +14,11 @@ IncomeTax::UK - Interface to Income Tax of UK.
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 Readonly my $UPPER_LIMIT => 150_000;
 

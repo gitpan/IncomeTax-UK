@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.66.
+signed via the Module::Signature module, version 0.68.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,14 +14,14 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 f96a35d518b9b6069c0c9f0953eafca23b88ef6d Build.PL
-SHA1 9d1e63ce297423fca673a543a5ea4f1aa3519052 Changes
+SHA1 97b06b80914ada2842d60f019b612137e6cfd5db Build.PL
+SHA1 5b48f8a16f398b6a69c4bad41afb6543bebf22e1 Changes
 SHA1 4d47560fd57d9da0e75f8ff7ca707d14552c1d1f MANIFEST
 SHA1 7d20e4e840781030202bb045d5ab81b3fd1b68b0 MANIFEST.SKIP
-SHA1 a7568806fe4315c27b0d8fdb59b0ef16458c845d META.yml
-SHA1 1d79938bd231acef9a16c819be0735d65fcb2676 Makefile.PL
+SHA1 ce6acb7a701c60145ac6553eea16b9a3cae5470f META.yml
+SHA1 9207e056cd38cebdee471cb579a53ebc91390699 Makefile.PL
 SHA1 3d38f90a9c92a5afc606cf2e3563a141a2cfe712 README
-SHA1 060f01b94f9281fc07ed18a797a32b02db014f46 lib/IncomeTax/UK.pm
+SHA1 eb3a623d7e0451df79383bb7c526c7ee2096c8e1 lib/IncomeTax/UK.pm
 SHA1 7b0c1abc43e36ff889be80776e15d96d4fc7be9a t/00-load.t
 SHA1 5944792a2f658d7b4775823b0fb25e7703d24591 t/01-unit-test.t
 SHA1 2b8ffb7e4f399af95d092743846ac8d438f2c53e t/manifest.t
@@ -29,11 +29,11 @@ SHA1 0765c9ff0cc4319f415bb08d0053b7717a8284a2 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.14 (MingW32)
 
-iQEcBAEBAgAGBQJN3NshAAoJEPYcXBXhRYOh/bsH/jkN1kTdb5L0vZiIk0tnL7Eh
-GgciUb6pr+BpaeNcpzhGamppDs8iv4xPMEppQA/YFmN8IKmPKEqIo0Wz2GE6PUBe
-omIIzDaZ6x/rj6Ah0+6/LVUD8C4Qzj3GbezYGUQjS62p5iAvtkjQZqaDwRcvs0zW
-3zxIQTS/yQBKhO4qtp8iZylshTKiTpplbeMRSBDfU8xB8sxsej8mQ2dVEE+sGCGk
-RmicDYQCAFH4xhl7S4SvGUhwJscsdPBAz9fyFxLpBbcX1zm8juKOHznzmtl7NBOV
-ren4KP7YKTNL7zw05VD9OngneXNj6c+vJy5Wx6WIybdPXuiVCsEoUV6iimBunNk=
-=hsXk
+iQEcBAEBAgAGBQJOQm/IAAoJEPYcXBXhRYOhkIoIAKNp3oAoxA+Zy8F7H2xEQZB6
+//8zsQwhTq2z8Yc2tAVpoufFi9T68ZzfkDMYQmWE9Od/TS3qtCeNMc/vUK11JQTZ
+gc5+deAnmMiKBEL0o5gIjAUVNnDZyy1CSAcwoadFLQ0jqEqxQu/u4tyyR3SNRPgV
+a6bvKwboWqBCVjaeWNTVXyM+0v7bSj4xzJ7qIBpTfq6uTxOzTeikbMUCgCBibQho
+Pm1L0XKq7qAkBITP+nII5ZV01niRh1RUI8bBaNYUSL8KpSanNJD2uCPonefnSMaY
+yXq8TjEa9rp7knYmBuv4jjTuHcYy09yu9okLaIBQymzTtb9+lX2IHAgyG9E7tM8=
+=QgWR
 -----END PGP SIGNATURE-----

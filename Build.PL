@@ -10,7 +10,7 @@ my $builder = Module::Build->new(
     add_to_cleanup    => [ 'IncomeTax-UK-*' ],    
     build_requires    => {
         'Test::More'  => 0,
-        'Readonly'    => 0,
+        'Readonly'    => '1.03',
     },
 );
 

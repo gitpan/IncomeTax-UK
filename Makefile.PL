@@ -10,7 +10,7 @@ WriteMakefile(
     clean         => { FILES => 'IncomeTax-UK-*' },
     PREREQ_PM     => {
         'Test::More' => 0,
-        'Readonly'   => 0,
+        'Readonly'   => '1.03',
     },
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')

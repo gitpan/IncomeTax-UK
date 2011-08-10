@@ -1,5 +1,9 @@
 Revision history for IncomeTax-UK
 
+0.08    Wed Aug 10 12:46:11 2011
+        - Made Readonly v1.03 as minimum requirement.
+        - Prepared the distribution using the Module::Signature v0.68.
+
 0.07    Wed May 25 11:32:11 2011
         - Added missing =cut at the end of the source code.
 
